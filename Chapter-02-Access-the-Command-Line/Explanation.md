@@ -316,7 +316,7 @@ date +%x
 Displays the date:
 
 ```text
-02/27/2022
+06/9/2026
 ```
 
 Other useful formats:

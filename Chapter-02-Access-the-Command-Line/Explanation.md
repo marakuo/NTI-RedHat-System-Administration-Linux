@@ -330,8 +330,41 @@ date +%H:%M    # Hour and minute
 
 ---
 
+# 7. `pwd`
 
-# 7. `passwd`
+`pwd` stands for **Print Working Directory**.
+
+It displays the absolute path of the directory you are currently working in.
+
+```bash
+pwd
+```
+
+Example:
+
+```console
+[user@host ~]$ pwd
+/home/user
+```
+
+If you change to another directory:
+
+```bash
+cd /etc
+pwd
+```
+
+The output is:
+
+```text
+/etc
+```
+
+`pwd` does not change your location. It only shows your current working directory.
+
+---
+
+# 8. `passwd`
 
 Changes the password of the current user.
 
@@ -360,7 +393,7 @@ sudo passwd username
 
 ---
 
-# 8. `file`
+# 9. `file`
 
 Displays the type of a file.
 
@@ -396,7 +429,7 @@ Linux does not determine a file's type simply from its filename extension. The `
 
 ---
 
-# 9. `cat`
+# 10. `cat`
 
 Displays the contents of a file.
 
@@ -422,7 +455,7 @@ The contents are displayed sequentially.
 
 ---
 
-# 10. `head`
+# 11. `head`
 
 Displays the beginning of a file.
 
@@ -448,7 +481,7 @@ This displays the first 3 lines.
 
 ---
 
-# 11. `tail`
+# 12. `tail`
 
 Displays the end of a file.
 
@@ -483,7 +516,7 @@ This displays the last 3 lines.
 
 ---
 
-# 12. `wc`
+# 13. `wc`
 
 `wc` stands for **word count**.
 
@@ -543,7 +576,7 @@ wc -c /etc/group /etc/hosts
 
 ---
 
-# 13. `\` — Line Continuation
+# 14. `\` — Line Continuation
 
 A backslash `\` can be used to continue a long command onto another line.
 
@@ -567,7 +600,7 @@ The `\` must be the **last character on the line**.
 
 ---
 
-# 14. `history`
+# 15. `history`
 
 Displays previously executed commands.
 
@@ -642,7 +675,7 @@ ls -l
 
 ---
 
-# 15. Command-Line Shortcuts
+# 16. Command-Line Shortcuts
 
 | Shortcut             | Description                                |
 | -------------------- | ------------------------------------------ |
@@ -661,7 +694,7 @@ ls -l
 
 ---
 
-# 16. `Tab` Completion
+# 17. `Tab` Completion
 
 The `Tab` key can automatically complete commands, filenames, and paths.
 
@@ -683,7 +716,7 @@ This is extremely useful when working with long filenames and paths.
 
 ---
 
-# 17. `Ctrl + R` — History Search
+# 18. `Ctrl + R` — History Search
 
 Press:
 
@@ -707,7 +740,7 @@ Press `Enter` to execute the displayed command.
 
 ---
 
-# 18. `Ctrl + C`
+# 19. `Ctrl + C`
 
 Interrupts the currently running command.
 
@@ -721,7 +754,7 @@ This sends an interrupt signal to the running process.
 
 ---
 
-# 19. `Ctrl + L`
+# 20. `Ctrl + L`
 
 Clears the visible terminal screen.
 
@@ -739,14 +772,14 @@ It does **not** delete the command history.
 
 ---
 
-# 20. Command Exit Status
+# 21. Command Exit Status
 
 Linux commands return an **exit status** after execution.
 
 Generally:
 
 ```text
-0       → Success
+0        → Success
 non-zero → Failure/Error
 ```
 
@@ -781,12 +814,13 @@ The `cd` command runs because `mkdir` returned a successful exit status.
 
 ---
 
-# 21. Quick Reference
+# 22. Quick Reference
 
 | Command / Operator | Purpose                                            |
 | ------------------ | -------------------------------------------------- |
 | `whoami`           | Show current user                                  |
 | `date`             | Show date and time                                 |
+| `pwd`              | Show current working directory                     |
 | `passwd`           | Change password                                    |
 | `file`             | Identify file type                                 |
 | `cat`              | Display file contents                              |
@@ -807,7 +841,7 @@ The `cd` command runs because `mkdir` returned a successful exit status.
 
 ---
 
-# 22. What You Should Practice
+# 23. What You Should Practice
 
 In your RHEL VM, make sure you can perform these without looking at the notes:
 
@@ -815,6 +849,7 @@ In your RHEL VM, make sure you can perform these without looking at the notes:
 whoami
 date
 date +%R
+pwd
 file /etc/passwd
 cat /etc/passwd
 head /etc/passwd
@@ -851,4 +886,4 @@ Ctrl + A
 Ctrl + E
 ```
 
-The goal isn't just to memorize these commands. You should be able to **look at a command such as `head -n 5 /etc/passwd` and immediately identify the command, option, option value, and argument.**
+The goal isn't just to memorize these commands. You should be able to look at a command such as `head -n 5 /etc/passwd` and immediately identify the command, option, option value, and argument.

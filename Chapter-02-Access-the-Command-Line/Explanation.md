@@ -1,0 +1,854 @@
+# Chapter 2 — Access the Command Line
+
+## 1. Structure of a Linux Command
+
+A Linux command generally follows this structure:
+
+```bash
+command [options] [arguments]
+```
+
+For example:
+
+```bash
+ls -l /etc
+```
+
+The command line can be broken into three main parts:
+
+```text
+command       options       arguments
+  │              │              │
+  ▼              ▼              ▼
+ ls             -l             /etc
+```
+
+### 1. Command
+
+The **command** is the program or instruction that you want the shell to execute.
+
+Example:
+
+```bash
+ls
+```
+
+`ls` tells Linux to list files and directories.
+
+---
+
+### 2. Options
+
+**Options** modify how a command behaves.
+
+Options usually start with:
+
+* `-` for a short option
+* `--` for a long option
+
+#### Short option
+
+```bash
+ls -l
+```
+
+Here:
+
+```text
+ls  → command
+-l  → option
+```
+
+`-l` tells `ls` to use the long listing format.
+
+#### Long option
+
+Some commands support longer, more descriptive options:
+
+```bash
+ls --all
+```
+
+Here:
+
+```text
+ls       → command
+--all    → option
+```
+
+`--all` tells `ls` to include hidden files.
+
+### Short vs Long Options
+
+```text
+-l
+```
+
+is a **short option**, while:
+
+```text
+--all
+```
+
+is a **long option**.
+
+Some commands allow multiple short options to be combined:
+
+```bash
+ls -la
+```
+
+This is equivalent to:
+
+```bash
+ls -l -a
+```
+
+The exact options available depend on the command.
+
+---
+
+### 3. Arguments
+
+An **argument** tells the command what object, file, directory, or value it should operate on.
+
+Example:
+
+```bash
+cat /etc/passwd
+```
+
+Structure:
+
+```text
+cat             → command
+/etc/passwd     → argument
+```
+
+The command is `cat`, and `/etc/passwd` is the file that `cat` should display.
+
+Another example:
+
+```bash
+head -n 3 /etc/passwd
+```
+
+Structure:
+
+```text
+head            → command
+-n 3            → option + option value
+/etc/passwd     → argument
+```
+
+---
+
+## 2. Complete Command Structure
+
+A more detailed representation is:
+
+```text
+command [options] [arguments]
+```
+
+For example:
+
+```bash
+head -n 3 /etc/passwd
+```
+
+Can be understood as:
+
+```text
+┌──────────┐   ┌────────────┐   ┌─────────────┐
+│ command  │   │   option   │   │   argument  │
+├──────────┤   ├────────────┤   ├─────────────┤
+│   head   │   │    -n 3    │   │ /etc/passwd │
+└──────────┘   └────────────┘   └─────────────┘
+```
+
+`-n` is the option, and `3` is the value associated with that option.
+
+The command means:
+
+> Display the first 3 lines of `/etc/passwd`.
+
+---
+
+## 3. Important: Not Every Command Has All Three Parts
+
+The structure is a general pattern, not a requirement.
+
+### Command only
+
+```bash
+whoami
+```
+
+### Command + argument
+
+```bash
+cat /etc/passwd
+```
+
+### Command + option
+
+```bash
+ls -l
+```
+
+### Command + option + argument
+
+```bash
+head -n 3 /etc/passwd
+```
+
+Some commands can have multiple options and arguments:
+
+```bash
+ls -la /etc /home
+```
+
+---
+
+# 4. `whoami`
+
+Shows the username of the currently logged-in user.
+
+```bash
+whoami
+```
+
+Example:
+
+```console
+[user@host ~]$ whoami
+user
+```
+
+---
+
+# 5. Running Multiple Commands
+
+## Using `;`
+
+You can execute multiple commands on the same line using `;`.
+
+```bash
+command1 ; command2
+```
+
+Both commands will execute regardless of whether the first command succeeds or fails.
+
+Example:
+
+```bash
+date ; whoami
+```
+
+---
+
+## Using `&&`
+
+```bash
+command1 && command2
+```
+
+The second command executes **only if the first command succeeds**.
+
+Example:
+
+```bash
+mkdir test && cd test
+```
+
+If `mkdir test` succeeds, `cd test` runs.
+
+If `mkdir test` fails, `cd test` does not run.
+
+### Difference
+
+```bash
+command1 ; command2
+```
+
+Run both commands regardless of the result.
+
+```bash
+command1 && command2
+```
+
+Run the second command only if the first succeeds.
+
+---
+
+# 6. `date`
+
+Displays the current date and time.
+
+```bash
+date
+```
+
+Example:
+
+```console
+[user@host ~]$ date
+Sun Feb 27 08:32:42 PM EST 2022
+```
+
+### Formatting the output
+
+```bash
+date +%R
+```
+
+Displays the time:
+
+```text
+20:33
+```
+
+```bash
+date +%x
+```
+
+Displays the date:
+
+```text
+02/27/2022
+```
+
+Other useful formats:
+
+```bash
+date +%Y       # Year
+date +%m       # Month
+date +%d       # Day
+date +%H:%M    # Hour and minute
+```
+
+---
+
+
+# 7. `passwd`
+
+Changes the password of the current user.
+
+```bash
+passwd
+```
+
+Example:
+
+```console
+[user@host ~]$ passwd
+Changing password for user user.
+Current password:
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+```
+
+When typing a password, Linux normally does **not display anything on the screen**.
+
+To change another user's password, administrator privileges are generally required:
+
+```bash
+sudo passwd username
+```
+
+---
+
+# 8. `file`
+
+Displays the type of a file.
+
+```bash
+file filename
+```
+
+Example:
+
+```bash
+file /etc/passwd
+```
+
+Output:
+
+```text
+/etc/passwd: ASCII text
+```
+
+Directories can also be checked:
+
+```bash
+file /home
+```
+
+Output:
+
+```text
+/home: directory
+```
+
+Linux does not determine a file's type simply from its filename extension. The `file` command examines the file's contents and identifies its type.
+
+---
+
+# 9. `cat`
+
+Displays the contents of a file.
+
+```bash
+cat filename
+```
+
+Example:
+
+```bash
+cat /etc/passwd
+```
+
+It can also display multiple files:
+
+```bash
+cat file1 file2
+```
+
+The contents are displayed sequentially.
+
+`cat` is most convenient for relatively small files. For large files, commands such as `less`, `head`, and `tail` are often more useful.
+
+---
+
+# 10. `head`
+
+Displays the beginning of a file.
+
+```bash
+head filename
+```
+
+By default, it displays the first **10 lines**.
+
+Example:
+
+```bash
+head /etc/passwd
+```
+
+To display a specific number of lines:
+
+```bash
+head -n 3 /etc/passwd
+```
+
+This displays the first 3 lines.
+
+---
+
+# 11. `tail`
+
+Displays the end of a file.
+
+```bash
+tail filename
+```
+
+By default, it displays the last **10 lines**.
+
+Example:
+
+```bash
+tail /etc/passwd
+```
+
+To display a specific number of lines:
+
+```bash
+tail -n 3 /etc/passwd
+```
+
+This displays the last 3 lines.
+
+### Summary
+
+| Command          | Purpose        |
+| ---------------- | -------------- |
+| `head file`      | First 10 lines |
+| `head -n 3 file` | First 3 lines  |
+| `tail file`      | Last 10 lines  |
+| `tail -n 3 file` | Last 3 lines   |
+
+---
+
+# 12. `wc`
+
+`wc` stands for **word count**.
+
+It can count:
+
+* Lines
+* Words
+* Bytes
+
+Basic usage:
+
+```bash
+wc filename
+```
+
+Example:
+
+```bash
+wc /etc/passwd
+```
+
+Output:
+
+```text
+41  98  2338 /etc/passwd
+```
+
+The values represent:
+
+```text
+lines   words   bytes   filename
+```
+
+### Count lines
+
+```bash
+wc -l /etc/passwd
+```
+
+### Count words
+
+```bash
+wc -w /etc/passwd
+```
+
+### Count bytes
+
+```bash
+wc -c /etc/passwd
+```
+
+Multiple files can also be used:
+
+```bash
+wc -c /etc/group /etc/hosts
+```
+
+---
+
+# 13. `\` — Line Continuation
+
+A backslash `\` can be used to continue a long command onto another line.
+
+Example:
+
+```bash
+head -n 3 \
+/usr/share/dict/words \
+/usr/share/dict/linux.words
+```
+
+The shell interprets this as one command:
+
+```bash
+head -n 3 /usr/share/dict/words /usr/share/dict/linux.words
+```
+
+This is useful when a command is long and you want to make it easier to read.
+
+The `\` must be the **last character on the line**.
+
+---
+
+# 14. `history`
+
+Displays previously executed commands.
+
+```bash
+history
+```
+
+Example:
+
+```text
+23  clear
+24  who
+25  pwd
+26  ls /etc
+27  uptime
+28  ls -l
+29  date
+30  history
+```
+
+Each command has a history number.
+
+---
+
+## Re-run a command using `!`
+
+### `!number`
+
+Runs the command with the specified history number.
+
+```bash
+!26
+```
+
+If command 26 was:
+
+```bash
+ls /etc
+```
+
+then `!26` executes:
+
+```bash
+ls /etc
+```
+
+### `!string`
+
+Runs the most recent command that begins with the specified string.
+
+```bash
+!ls
+```
+
+If the most recent command beginning with `ls` was:
+
+```bash
+ls -l
+```
+
+then:
+
+```bash
+!ls
+```
+
+runs:
+
+```bash
+ls -l
+```
+
+---
+
+# 15. Command-Line Shortcuts
+
+| Shortcut             | Description                                |
+| -------------------- | ------------------------------------------ |
+| `Ctrl + A`           | Move to the beginning of the command line  |
+| `Ctrl + E`           | Move to the end of the command line        |
+| `Ctrl + U`           | Delete from the cursor to the beginning    |
+| `Ctrl + K`           | Delete from the cursor to the end          |
+| `Ctrl + Left Arrow`  | Move to the beginning of the previous word |
+| `Ctrl + Right Arrow` | Move to the end of the next word           |
+| `Ctrl + R`           | Search command history                     |
+| `Ctrl + C`           | Cancel/interrupt the current command       |
+| `Ctrl + L`           | Clear the terminal screen                  |
+| `Up Arrow`           | Show the previous command                  |
+| `Down Arrow`         | Move forward through command history       |
+| `Tab`                | Auto-complete commands, files, and paths   |
+
+---
+
+# 16. `Tab` Completion
+
+The `Tab` key can automatically complete commands, filenames, and paths.
+
+For example:
+
+```bash
+cd /usr/sh
+```
+
+Press `Tab`, and the shell may complete it to:
+
+```bash
+cd /usr/share/
+```
+
+If there are multiple possible completions, pressing `Tab` twice can display the available choices.
+
+This is extremely useful when working with long filenames and paths.
+
+---
+
+# 17. `Ctrl + R` — History Search
+
+Press:
+
+```text
+Ctrl + R
+```
+
+Then type part of a previous command.
+
+For example, searching for:
+
+```text
+ssh
+```
+
+can find a previous command containing `ssh`.
+
+Press `Ctrl + R` again to search through older matches.
+
+Press `Enter` to execute the displayed command.
+
+---
+
+# 18. `Ctrl + C`
+
+Interrupts the currently running command.
+
+For example, if a command keeps running and you need to stop it:
+
+```text
+Ctrl + C
+```
+
+This sends an interrupt signal to the running process.
+
+---
+
+# 19. `Ctrl + L`
+
+Clears the visible terminal screen.
+
+```text
+Ctrl + L
+```
+
+It is similar to running:
+
+```bash
+clear
+```
+
+It does **not** delete the command history.
+
+---
+
+# 20. Command Exit Status
+
+Linux commands return an **exit status** after execution.
+
+Generally:
+
+```text
+0       → Success
+non-zero → Failure/Error
+```
+
+You can check the exit status of the previous command using:
+
+```bash
+echo $?
+```
+
+Example:
+
+```bash
+mkdir test
+echo $?
+```
+
+If the directory was successfully created:
+
+```text
+0
+```
+
+This is directly related to `&&`.
+
+For example:
+
+```bash
+mkdir test && cd test
+```
+
+The `cd` command runs because `mkdir` returned a successful exit status.
+
+---
+
+# 21. Quick Reference
+
+| Command / Operator | Purpose                                            |
+| ------------------ | -------------------------------------------------- |
+| `whoami`           | Show current user                                  |
+| `date`             | Show date and time                                 |
+| `passwd`           | Change password                                    |
+| `file`             | Identify file type                                 |
+| `cat`              | Display file contents                              |
+| `head`             | Display beginning of file                          |
+| `tail`             | Display end of file                                |
+| `wc`               | Count lines, words, and bytes                      |
+| `history`          | Display command history                            |
+| `!number`          | Re-run a history command                           |
+| `!string`          | Re-run the latest command beginning with a string  |
+| `;`                | Run commands sequentially regardless of success    |
+| `&&`               | Run next command only if previous command succeeds |
+| `\`                | Continue a command onto another line               |
+| `Tab`              | Auto-completion                                    |
+| `Ctrl + R`         | Search command history                             |
+| `Ctrl + C`         | Interrupt current command                          |
+| `Ctrl + L`         | Clear terminal                                     |
+| `echo $?`          | Show previous command's exit status                |
+
+---
+
+# 22. What You Should Practice
+
+In your RHEL VM, make sure you can perform these without looking at the notes:
+
+```bash
+whoami
+date
+date +%R
+file /etc/passwd
+cat /etc/passwd
+head /etc/passwd
+head -n 3 /etc/passwd
+tail /etc/passwd
+tail -n 3 /etc/passwd
+wc /etc/passwd
+wc -l /etc/passwd
+history
+```
+
+Then practice:
+
+```bash
+date ; whoami
+```
+
+```bash
+mkdir test && cd test
+```
+
+```bash
+echo $?
+```
+
+And practice the keyboard shortcuts, especially:
+
+```text
+Tab
+Ctrl + R
+Ctrl + C
+Ctrl + L
+Ctrl + A
+Ctrl + E
+```
+
+The goal isn't just to memorize these commands. You should be able to **look at a command such as `head -n 5 /etc/passwd` and immediately identify the command, option, option value, and argument.**

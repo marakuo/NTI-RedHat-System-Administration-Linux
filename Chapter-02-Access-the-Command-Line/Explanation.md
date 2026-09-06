@@ -294,39 +294,355 @@ Example:
 
 ```console
 [user@host ~]$ date
-Sun Feb 27 08:32:42 PM EST 2022
+Tue Mar 10 2026 08:32:42 PM UTC
 ```
 
-### Formatting the output
+The exact output depends on your system's timezone and locale.
+
+## Date Format Characters
+
+The `date` command uses a plus sign followed by format characters. Format characters are case-sensitive, so uppercase and lowercase letters can produce different results.
+
+### Common Date and Time Formats
 
 ```bash
-date +%R
+date +%Y
 ```
 
-Displays the time:
+Displays the four-digit year:
 
 ```text
-20:33
+2026
 ```
 
 ```bash
-date +%x
+date +%y
 ```
 
-Displays the date:
+Displays the two-digit year:
 
 ```text
-06/9/2026
+26
 ```
-
-Other useful formats:
 
 ```bash
-date +%Y       # Year
-date +%m       # Month
-date +%d       # Day
-date +%H:%M    # Hour and minute
+date +%m
 ```
+
+Displays the month as a two-digit number:
+
+```text
+03
+```
+
+```bash
+date +%B
+```
+
+Displays the full month name:
+
+```text
+March
+```
+
+```bash
+date +%b
+```
+
+Displays the abbreviated month name:
+
+```text
+Mar
+```
+
+```bash
+date +%d
+```
+
+Displays the day of the month as a two-digit number:
+
+```text
+10
+```
+
+```bash
+date +%e
+```
+
+Displays the day of the month with a leading space instead of a leading zero:
+
+```text
+10
+```
+
+```bash
+date +%A
+```
+
+Displays the full weekday name:
+
+```text
+Tuesday
+```
+
+```bash
+date +%a
+```
+
+Displays the abbreviated weekday name:
+
+```text
+Tue
+```
+
+```bash
+date +%H
+```
+
+Displays the hour in 24-hour format:
+
+```text
+20
+```
+
+```bash
+date +%I
+```
+
+Displays the hour in 12-hour format:
+
+```text
+08
+```
+
+```bash
+date +%M
+```
+
+Displays the minute:
+
+```text
+32
+```
+
+```bash
+date +%S
+```
+
+Displays the seconds:
+
+```text
+42
+```
+
+```bash
+date +%N
+```
+
+Displays nanoseconds:
+
+```text
+123456789
+```
+
+The exact nanosecond value changes every time the command runs.
+
+```bash
+date +%p
+```
+
+Displays the locale's uppercase AM or PM indicator:
+
+```text
+PM
+```
+
+```bash
+date +%P
+```
+
+Displays the locale's lowercase am or pm indicator:
+
+```text
+pm
+```
+
+```bash
+date +%z
+```
+
+Displays the numeric timezone offset:
+
+```text
++0000
+```
+
+```bash
+date +%Z
+```
+
+Displays the timezone abbreviation:
+
+```text
+UTC
+```
+
+```bash
+date +%s
+```
+
+Displays the number of seconds since the Unix Epoch:
+
+```text
+1773174762
+```
+
+The value changes continuously and represents the current time.
+
+## Useful Combined Formats
+
+Display the date in year-month-day format:
+
+```bash
+date +%Y-%m-%d
+```
+
+Example:
+
+```text
+2026-03-10
+```
+
+Display the time in 24-hour format:
+
+```bash
+date +%H:%M:%S
+```
+
+Example:
+
+```text
+20:32:42
+```
+
+Display the time in 12-hour format:
+
+```bash
+date +%I:%M:%S%p
+```
+
+Example:
+
+```text
+08:32:42PM
+```
+
+Display the date and time:
+
+```bash
+date "+%Y-%m-%d %H:%M:%S"
+```
+
+Example:
+
+```text
+2026-03-10 20:32:42
+```
+
+Display the weekday, date, and time:
+
+```bash
+date "+%A, %B %d, %Y %H:%M:%S %Z"
+```
+
+Example:
+
+```text
+Tuesday, March 10, 2026 20:32:42 UTC
+```
+
+### Common Format Reference
+
+| Format | Meaning                         | Example                    |
+| ------ | ------------------------------- | -------------------------- |
+| `%Y`   | Four-digit year                 | `2026`                     |
+| `%y`   | Two-digit year                  | `26`                       |
+| `%m`   | Month number                    | `03`                       |
+| `%B`   | Full month name                 | `March`                    |
+| `%b`   | Abbreviated month name          | `Mar`                      |
+| `%d`   | Day of month with leading zero  | `10`                       |
+| `%e`   | Day of month with leading space | `10`                       |
+| `%A`   | Full weekday name               | `Tuesday`                  |
+| `%a`   | Abbreviated weekday name        | `Tue`                      |
+| `%H`   | Hour in 24-hour format          | `20`                       |
+| `%I`   | Hour in 12-hour format          | `08`                       |
+| `%M`   | Minute                          | `32`                       |
+| `%S`   | Seconds                         | `42`                       |
+| `%N`   | Nanoseconds                     | `123456789`                |
+| `%p`   | Uppercase AM or PM              | `PM`                       |
+| `%P`   | Lowercase am or pm              | `pm`                       |
+| `%z`   | Numeric timezone offset         | `+0000`                    |
+| `%Z`   | Timezone abbreviation           | `UTC`                      |
+| `%s`   | Seconds since the Unix Epoch    | `1773174762`               |
+| `%R`   | Time in `HH:MM` format          | `20:32`                    |
+| `%T`   | Time in `HH:MM:SS` format       | `20:32:42`                 |
+| `%D`   | Date in `MM/DD/YY` format       | `03/10/26`                 |
+| `%F`   | Date in `YYYY-MM-DD` format     | `2026-03-10`               |
+| `%x`   | Locale's date representation    | `03/10/26`                 |
+| `%X`   | Locale's time representation    | `20:32:42`                 |
+| `%c`   | Locale's complete date and time | `Tue Mar 10 20:32:42 2026` |
+
+### Important Difference Between Uppercase and Lowercase
+
+The following format characters are different:
+
+```bash
+date +%Y
+date +%y
+```
+
+* `%Y` → four-digit year, such as `2026`
+* `%y` → two-digit year, such as `26`
+
+```bash
+date +%H
+date +%I
+```
+
+* `%H` → hour in 24-hour format
+* `%I` → hour in 12-hour format
+
+```bash
+date +%M
+date +%m
+```
+
+* `%M` → minutes
+* `%m` → month number
+
+```bash
+date +%S
+date +%s
+```
+
+* `%S` → seconds within the current minute
+* `%s` → seconds since the Unix Epoch
+
+```bash
+date +%p
+date +%P
+```
+
+* `%p` → uppercase AM or PM
+* `%P` → lowercase am or pm
+
+```bash
+date +%Z
+date +%z
+```
+
+* `%Z` → timezone abbreviation
+* `%z` → numeric timezone offset
 
 ---
 
@@ -686,7 +1002,7 @@ ls -l
 | `Ctrl + Left Arrow`  | Move to the beginning of the previous word |
 | `Ctrl + Right Arrow` | Move to the end of the next word           |
 | `Ctrl + R`           | Search command history                     |
-| `Ctrl + C`           | Cancel/interrupt the current command       |
+| `Ctrl + C`           | Cancel or interrupt the current command    |
 | `Ctrl + L`           | Clear the terminal screen                  |
 | `Up Arrow`           | Show the previous command                  |
 | `Down Arrow`         | Move forward through command history       |
@@ -816,28 +1132,49 @@ The `cd` command runs because `mkdir` returned a successful exit status.
 
 # 22. Quick Reference
 
-| Command / Operator | Purpose                                            |
-| ------------------ | -------------------------------------------------- |
-| `whoami`           | Show current user                                  |
-| `date`             | Show date and time                                 |
-| `pwd`              | Show current working directory                     |
-| `passwd`           | Change password                                    |
-| `file`             | Identify file type                                 |
-| `cat`              | Display file contents                              |
-| `head`             | Display beginning of file                          |
-| `tail`             | Display end of file                                |
-| `wc`               | Count lines, words, and bytes                      |
-| `history`          | Display command history                            |
-| `!number`          | Re-run a history command                           |
-| `!string`          | Re-run the latest command beginning with a string  |
-| `;`                | Run commands sequentially regardless of success    |
-| `&&`               | Run next command only if previous command succeeds |
-| `\`                | Continue a command onto another line               |
-| `Tab`              | Auto-completion                                    |
-| `Ctrl + R`         | Search command history                             |
-| `Ctrl + C`         | Interrupt current command                          |
-| `Ctrl + L`         | Clear terminal                                     |
-| `echo $?`          | Show previous command's exit status                |
+| Command / Operator | Purpose                                                    |
+| ------------------ | ---------------------------------------------------------- |
+| `whoami`           | Show current user                                          |
+| `date`             | Show date and time                                         |
+| `date +%Y`         | Show the four-digit year                                   |
+| `date +%y`         | Show the two-digit year                                    |
+| `date +%m`         | Show the month number                                      |
+| `date +%B`         | Show the full month name                                   |
+| `date +%b`         | Show the abbreviated month name                            |
+| `date +%d`         | Show the day of the month                                  |
+| `date +%A`         | Show the full weekday name                                 |
+| `date +%a`         | Show the abbreviated weekday name                          |
+| `date +%H`         | Show the hour in 24-hour format                            |
+| `date +%I`         | Show the hour in 12-hour format                            |
+| `date +%M`         | Show the minutes                                           |
+| `date +%S`         | Show the seconds                                           |
+| `date +%p`         | Show uppercase AM or PM                                    |
+| `date +%P`         | Show lowercase am or pm                                    |
+| `date +%z`         | Show the numeric timezone offset                           |
+| `date +%Z`         | Show the timezone abbreviation                             |
+| `date +%R`         | Show time in `HH:MM` format                                |
+| `date +%T`         | Show time in `HH:MM:SS` format                             |
+| `date +%F`         | Show date in `YYYY-MM-DD` format                           |
+| `date +%x`         | Show the locale's date representation                      |
+| `date +%X`         | Show the locale's time representation                      |
+| `pwd`              | Show current working directory                             |
+| `passwd`           | Change password                                            |
+| `file`             | Identify file type                                         |
+| `cat`              | Display file contents                                      |
+| `head`             | Display beginning of file                                  |
+| `tail`             | Display end of file                                        |
+| `wc`               | Count lines, words, and bytes                              |
+| `history`          | Display command history                                    |
+| `!number`          | Re-run a history command                                   |
+| `!string`          | Re-run the latest command beginning with a string          |
+| `;`                | Run commands sequentially regardless of success            |
+| `&&`               | Run the next command only if the previous command succeeds |
+| `\`                | Continue a command onto another line                       |
+| `Tab`              | Auto-completion                                            |
+| `Ctrl + R`         | Search command history                                     |
+| `Ctrl + C`         | Interrupt the current command                              |
+| `Ctrl + L`         | Clear the terminal                                         |
+| `echo $?`          | Show the previous command's exit status                    |
 
 ---
 
@@ -848,7 +1185,28 @@ In your RHEL VM, make sure you can perform these without looking at the notes:
 ```bash
 whoami
 date
+date +%Y
+date +%y
+date +%m
+date +%B
+date +%b
+date +%d
+date +%A
+date +%a
+date +%H
+date +%I
+date +%M
+date +%S
+date +%p
+date +%P
+date +%z
+date +%Z
 date +%R
+date +%T
+date +%F
+date +%x
+date +%X
+date "+%Y-%m-%d %H:%M:%S %Z"
 pwd
 file /etc/passwd
 cat /etc/passwd
@@ -886,4 +1244,16 @@ Ctrl + A
 Ctrl + E
 ```
 
-The goal isn't just to memorize these commands. You should be able to look at a command such as `head -n 5 /etc/passwd` and immediately identify the command, option, option value, and argument.
+The goal is not just to memorize these commands. You should be able to look at a command such as:
+
+```bash
+date "+%A, %B %d, %Y %H:%M:%S %Z"
+```
+
+and identify the command, the format option, and each date and time format character. You should also be able to look at:
+
+```bash
+head -n 5 /etc/passwd
+```
+
+and immediately identify the command, option, option value, and argument.
